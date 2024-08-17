@@ -1,0 +1,148 @@
+{
+  "editoriales": [
+    {
+      "id": "1",
+      "nombre": "Santillana",
+      "telefono": "555-1234",
+      "direccion": "123 Calle Falsa",
+      "libros": []
+    },
+    {
+      "id": "2",
+      "nombre": "Don Bosco",
+      "telefono": "555-5678",
+      "direccion": "456 Calle Verdadera",
+      "libros": []
+    },
+    {
+      "id": "3",
+      "nombre": "La Hoguera",
+      "telefono": "555-9999",
+      "direccion": "789 Calle Inventada"
+    },
+    {
+      "id": "4",
+      "nombre": "Grad",
+      "telefono": "555-8888",
+      "direccion": "123 Calle Real"
+    },
+    {
+      "id": "5",
+      "nombre": "Pearson",
+      "telefono": "555-7777",
+      "direccion": "456 Calle Real"
+    },
+    {
+      "nombre": "Hugo Andia",
+      "telefono": "60621272",
+      "direccion": "Obrajes, c. 2",
+      "id": "rWICTrT"
+    }
+  ],
+  "libros": [
+    {
+      "id": "1",
+      "titulo": "La Piedra Filosofal",
+      "genero": "Ficción",
+      "autorId": "1",
+      "numpaginas": "5",
+      "editorialId": "1"
+    },
+    {
+      "id": "2",
+      "titulo": "La cola de la serpiente",
+      "genero": "Drama",
+      "autorId": "2",
+      "numpaginas": "3",
+      "editorialId": "1"
+    },
+    {
+      "id": "3",
+      "titulo": "Rex",
+      "genero": "Ficción",
+      "autorId": "4",
+      "numpaginas": "7",
+      "editorialId": "2"
+    },
+    {
+      "id": "4",
+      "titulo": "La Iliada",
+      "genero": "Drama",
+      "autorId": "5",
+      "numpaginas": "4",
+      "editorialId": "3"
+    },
+    {
+      "id": "5",
+      "titulo": "La Odisea",
+      "genero": "Drama",
+      "autorId": "1",
+      "numpaginas": "6",
+      "editorialId": "4"
+    }
+  ],
+  "autores": [
+    {
+      "id": "1",
+      "nombre": "María López",
+      "nacionalidad": "Uruguaya",
+      "telefono": "555-8765"
+    },
+    {
+      "id": "2",
+      "nombre": "Carlos Fernández",
+      "nacionalidad": "Brasilera",
+      "telefono": "555-4321"
+    },
+    {
+      "id": "3",
+      "nombre": "Ana Martínez",
+      "nacionalidad": "Inglesa",
+      "telefono": "555-6543"
+    },
+    {
+      "id": "4",
+      "nombre": "Javier Torres",
+      "nacionalidad": "Chilena",
+      "telefono": "555-3456"
+    },
+    {
+      "id": "5",
+      "nombre": "Laura Díaz",
+      "nacionalidad": "Peruana",
+      "telefono": "555-2345"
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "1",
+      "email": "secretaria1@example.com",
+      "password": "secretaria123",
+      "role": "secretaria"
+    },
+    {
+      "id": "2",
+      "email": "cajero1@example.com",
+      "password": "cajero123",
+      "role": "cajero"
+    },
+    {
+      "id": "3",
+      "email": "secretaria2@example.com",
+      "password": "secretaria456",
+      "role": "secretaria"
+    },
+    {
+      "id": "4",
+      "email": "cajero2@example.com",
+      "password": "cajero456",
+      "role": "cajero"
+    },
+    {
+      "id": "5",
+      "email": "admin@example.com",
+      "password": "admin123",
+      "role": "admin"
+    }
+  ]
+}

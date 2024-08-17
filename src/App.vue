@@ -1,30 +1,31 @@
 <template>
-  <nav>
+  <Menu>
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+    <router-link to="/about">About</router-link> |
+    <router-link to="/editorial">Editoriales</router-link> |
+    <router-link to="/libro">Libros</router-link> |
+    <router-link to="/autor">Autores</router-link>
+  </Menu>
   <router-view/>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
 
-nav {
-  padding: 30px;
+import Menu from './components/Menu.vue'
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+export default {
+  name: 'App',
+  data() {
+    return {
 
-    &.router-link-exact-active {
-      color: #42b983;
     }
-  }
+  },
+  components: {
+    Menu
+  },
 }
+</script>
+
+<style lang="scss">
+
 </style>
