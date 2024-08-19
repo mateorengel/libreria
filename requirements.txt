@@ -1,0 +1,17 @@
+Nombres:
+-Andia Juarez Hugo
+-Rengel Acebey Mateo
+
+## Project setup
+```
+npm install
+```
+
+npm install -g json-server@0.17.1
+
+
+#Ingresar a la carpeta db y correr la línea
+json-server --watch db.json --port 4000
+
+#En otra terminal dirigirse a la carpeta LIBRERIA y correr
+npm run serve 
