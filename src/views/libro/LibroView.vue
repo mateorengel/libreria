@@ -40,9 +40,10 @@
                     <td>{{ 1 + index }}</td>
                     <td>{{ item.titulo }}</td>
                     <td>{{ item.genero }}</td>
-                    <td>{{ item.autorId }}</td>
+                    <td>{{ item.autor ? item.autor.nombre : 'Autor desconocido' }}</td>
                     <td>{{ item.numpaginas }}</td>
-                    <td>{{ item.editorialId }}</td>
+                    <td>{{ item.editorial.nombre }}</td>
+
                     <td>
                         <button @click="edit(item)" class="btn btn-dark" style="margin-right: 15px;">Editar</button>
                         <button @click="Eliminar(item.id)" class="btn btn-danger">Eliminar</button>
@@ -58,6 +59,7 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import Modal from '../../components/Modal.vue'
 import LibroNewView from './LibroNewView.vue'
 import LibroEditView from './LibroEditView.vue'
+import AutorView from '../autor/AutorView.vue';
 
 
 export default {
@@ -84,32 +86,52 @@ export default {
         // Registro de componentes que se utilizaran.
         Modal,
         LibroNewView,
-        LibroEditView
+        LibroEditView,
+        AutorView,
     },
     methods: {
         // métodos que se pueden llamar desde la plantilla o desde otras partes del componente.
         ...mapActions(['increment']),
         getList() {
             const vm = this;
-            this.path = this.baseUrl + "/libros?_expand=editorial&_expand=autor" + this.textToFilter + "&q=" + this.textToSearch;
-            this.axios.get(this.baseUrl + "/libros?_expand=editorial&_expand=autor" + this.textToFilter + "&q=" + this.textToSearch)
+            this.path = this.baseUrl + "/libros?_expand=editorial" + this.textToFilter + "&q=" + this.textToSearch;
+            this.axios.get(this.path)
                 .then(function (response) {
+                    // Almacena la lista de libros obtenida
                     vm.itemList = response.data;
+                    
+                    // Asocia manualmente los autores a los libros
+                    vm.itemList.forEach(libro => {
+                        const autor = vm.autorList.find(a => a.id === libro.autorId);
+                        libro.autor = autor || { nombre: 'Autor desconocido' };
+
+                        const editorial = vm.editorialList.find(e => e.id === libro.editorialId);
+                        libro.editorial = editorial || { nombre: 'Editorial desconocida' };
+                    });
                 })
                 .catch(function (error) {
                     console.error(error);
                 });
         },
         getAutorList() {
-            const vm = this;
-            this.axios.get(this.baseUrl + "/autores")
-                .then(function (response) {
-                    vm.autorList = response.data;
+            return this.axios.get(this.baseUrl + "/autores")
+                .then(response => {
+                    this.autorList = response.data;
                 })
-                .catch(function (error) {
+                .catch(error => {
                     console.error(error);
                 });
         },
+        getEditorialList() {
+            return this.axios.get(this.baseUrl + "/editoriales")
+                .then(response => {
+                    this.editorialList = response.data;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        },
+
         edit(item) {
             this.itemToEdit = Object.assign({}, item);
             this.showModalEdit = true;
@@ -166,8 +188,12 @@ export default {
         // propiedades que el componente puede recibir.
     },
     mounted() {
-        this.getList();
-        this.getAutorList();
+        const vm = this;
+        // Cargar autores y editoriales antes de cargar los libros
+        Promise.all([this.getAutorList(), this.getEditorialList()])
+        .then(() => {
+            vm.getList();
+        });
     },
     emits: [] // los eventos personalizados que el componente puede emitir.
 }

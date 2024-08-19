@@ -4,7 +4,7 @@
       "id": "1",
       "nombre": "Santillana",
       "telefono": "555-1234",
-      "direccion": "123 Calle Falsa",
+      "direccion": "123 Calle Falsa2",
       "libros": []
     },
     {
@@ -31,13 +31,19 @@
       "nombre": "Pearson",
       "telefono": "555-7777",
       "direccion": "456 Calle Real"
+    },
+    {
+      "nombre": "Mateo Rengel Acebey",
+      "telefono": "70572661",
+      "direccion": "Achumani",
+      "id": "rzwytmZ"
     }
   ],
   "libros": [
     {
       "id": "1",
       "titulo": "La Piedra Filosofal",
-      "genero": "Ficción",
+      "genero": "Drama",
       "autorId": "1",
       "numpaginas": 10,
       "editorialId": "1"
@@ -107,12 +113,6 @@
       "nombre": "Javier Torres",
       "nacionalidad": "Chilena",
       "telefono": "555-3456"
-    },
-    {
-      "id": "5",
-      "nombre": "Laura Díaz",
-      "nacionalidad": "Peruana",
-      "telefono": "555-2345"
     }
   ],
   "usuarios": [
