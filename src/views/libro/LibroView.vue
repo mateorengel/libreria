@@ -1,15 +1,28 @@
 <template>
     <div>
         <Modal v-model:modelValue="showModalNuevo">
-            <LibroNew @on-register="onRegister($event)"/>
+            <LibroNewView @on-register="onRegister()" />
         </Modal>
         <Modal v-model:modelValue="showModalEdit">
-            <LibroEdit @on-update="onUpdate($event)" :item="itemToEdit"/>
+            <LibroEditView @on-update="onUpdate()" :item="itemToEdit" />
         </Modal>
         <h1>Lista de Libros</h1>
         <button @click="showModalNuevo = true" class="btn btn-primary">Nuevo</button>
         <button @click="buscar()" class="btn btn-lith" style="float:right">Buscar</button>
         <input type="search" style="float:right" v-model="textToSearch" @search="buscar()">
+        <div style="margin: 20px 0;">
+            <h3>Filtros:</h3>
+            <form @submit.prevent="filtrar()">
+
+                <label for="autor"> Autor: </label>
+                <select id="autor" v-model="filter.autorId">
+                    <option value="">Todos</option>
+                    <option :value="autor.id" v-for="(autor, index) in autorList" :key="`autor-${index}`">{{ autor.nombre }}
+                    </option>
+                  </select>
+                <button type="submit" class="btn btn-lith">Fitrar</button>
+            </form>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -43,8 +56,8 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import Modal from '../../components/Modal.vue'
-import LibroNew from './LibroNewView.vue'
-import LibroEdit from './LibroEditView.vue'
+import LibroNewView from './LibroNewView.vue'
+import LibroEditView from './LibroEditView.vue'
 
 
 export default {
@@ -57,21 +70,29 @@ export default {
             showModalEdit: false,
             itemToEdit: null,
             textToSearch: '',
-            itemList: []
+            textToFilter: '',
+            itemList: [],
+            autorList: [],
+            path: '',
+            filter: {
+                
+                autorId:''
+            }
         }
     },
     components: {
         // Registro de componentes que se utilizaran.
         Modal,
-        LibroNew,
-        LibroEdit
+        LibroNewView,
+        LibroEditView
     },
     methods: {
         // métodos que se pueden llamar desde la plantilla o desde otras partes del componente.
         ...mapActions(['increment']),
         getList() {
             const vm = this;
-            this.axios.get(this.baseUrl + "/libros?_expand=editorial&q=" + this.textToSearch)
+            this.path = this.baseUrl + "/libros?_expand=editorial&_expand=autor" + this.textToFilter + "&q=" + this.textToSearch;
+            this.axios.get(this.baseUrl + "/libros?_expand=editorial&_expand=autor" + this.textToFilter + "&q=" + this.textToSearch)
                 .then(function (response) {
                     vm.itemList = response.data;
                 })
@@ -79,9 +100,16 @@ export default {
                     console.error(error);
                 });
         },
-        /*irVacunas(id){
-            this.$router.push("/mascota/"+id+"/vacunas");
-        },*/
+        getAutorList() {
+            const vm = this;
+            this.axios.get(this.baseUrl + "/autores")
+                .then(function (response) {
+                    vm.autorList = response.data;
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        },
         edit(item) {
             this.itemToEdit = Object.assign({}, item);
             this.showModalEdit = true;
@@ -101,6 +129,14 @@ export default {
 
         },
         buscar() {
+            this.getList();
+        },
+        filtrar() {
+            this.textToFilter = '';
+            
+            if (this.filter.autorId != null && this.filter.autorId != '') {
+                this.textToFilter += "&autorId=" + this.filter.autorId;
+            }
             this.getList();
         },
         onRegister(event) {
@@ -131,6 +167,7 @@ export default {
     },
     mounted() {
         this.getList();
+        this.getAutorList();
     },
     emits: [] // los eventos personalizados que el componente puede emitir.
 }

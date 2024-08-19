@@ -1,19 +1,11 @@
 <template>
   <div>
-    <h1>Registrar Libro</h1>
+    <h1>Registrar Cita</h1>
     <form @submit.prevent="submitForm">
-      <div class="form-group">
-        <label for="editorial">Editorial:</label>
-        <select id="editorial" v-model="form.editorialId" :class="{ 'is-invalid': errors.editorialId }">
-          <option :value="editorial.id" v-for="(editorial, index) in editorialList" :key="`editorial-${index}`">{{ editorial.nombre }}
-          </option>
-        </select>
-        <div v-if="errors.editorialId" class="invalid-feedback">{{ errors.editorialId }}</div>
-      </div>
 
       <div class="form-group">
-        <label for="name">Nombre libro:</label>
-        <input type="text" id="name" v-model="form.titulo" :class="{ 'is-invalid': errors.titulo }"
+        <label for="titulo">Nombre libro:</label>
+        <input type="text" id="titulo" v-model="form.titulo" :class="{ 'is-invalid': errors.titulo }"
           placeholder="Ingrese el nombre" />
         <div v-if="errors.titulo" class="invalid-feedback">{{ errors.titulo }}</div>
       </div>
@@ -36,11 +28,21 @@
       </div>
 
       <div class="form-group">
-        <label for="paginas">Numero de Paginas:</label>
-        <input type="number" id="paginas" v-model="form.paginas" :class="{ 'is-invalid': errors.paginas }"
-          placeholder="Ingrese el numero de paginas" />
-        <div v-if="errors.paginas" class="invalid-feedback">{{ errors.paginas }}</div>
+        <label for="editorial">Editorial:</label>
+        <select id="editorial" v-model="form.editorialId" :class="{ 'is-invalid': errors.editorialId }">
+          <option :value="editorial.id" v-for="(editorial, index) in editorialList" :key="`editorial-${index}`">{{ editorial.nombre }}
+          </option>
+        </select>
+        <div v-if="errors.editorialId" class="invalid-feedback">{{ errors.editorialId }}</div>
       </div>
+
+      <div class="form-group">
+        <label for="numpaginas">Numero de Paginas:</label>
+        <input type="number" id="numpaginas" v-model="form.numpaginas" :class="{ 'is-invalid': errors.numpaginas }"
+          placeholder="Ingrese el numero de paginas" />
+        <div v-if="errors.numpaginas" class="invalid-feedback">{{ errors.numpaginas }}</div>
+      </div>
+      
       <button type="submit" class="btn btn-primary">Registrar</button>
     </form>
   </div>
@@ -52,18 +54,21 @@ export default {
   name: 'LibroNew',
   data() {
     return {
-      editorialList: [],
       autorList: [],
+      editorialList: [],
       generoList: [
-        "Ficcion",
-        "Drama"
+        "Ficción",
+        "Drama",
+        "Comic",
+        "Poemas"
       ],
       form: {
-        titulo: '',
-        genero: '',
-        autor: '',
-        paginas: '',
-        editorialId: null
+        autorId: null,
+        editorialId: null,
+        genero: null,
+        titulo:null,
+        numpaginas:null,
+  
       },
       errors: {}
     };
@@ -73,25 +78,26 @@ export default {
     validateForm() {
       this.errors = {};
 
-      if (!this.form.titulo) {
-        this.errors.titulo = 'El nombre es obligatorio.';
-      }
-
-      if (!this.form.genero) {
-        this.errors.genero = 'La especie es obligatoria.';
-      }
-
-      if (!this.form.autor) {
-        this.errors.autor = 'El autor es obligatorio.';
-      }
-
-      if (!this.form.paginas) {
-        this.errors.paginas = 'El número de páginas es obligatorio.';
+      if (!this.form.autorId) {
+        this.errors.autorId = 'El Autor es obligatorio.';
       }
 
       if (!this.form.editorialId) {
-        this.errors.editorialId = 'La editorial es obligatoria.';
+        this.errors.editorialId = 'El Editorial es obligatoria.';
       }
+      
+      if (!this.form.genero) {
+        this.errors.genero = 'La genero es obligatorio.';
+      }
+
+      if (!this.form.numpaginas) {
+        this.errors.numpaginas = 'El numero de paginas es obligatorio.';
+      }
+
+      if (!this.form.titulo) {
+        this.errors.titulo = 'El titulo es obligatorio.';
+      }
+
 
       return Object.keys(this.errors).length === 0;
     },
@@ -102,10 +108,6 @@ export default {
         this.save();
         // Reiniciar el formulario
         this.form = {
-          titulo: '',
-          genero: '',
-          autor: '',
-          paginas: '',
           editorialId: null
         };
       }
@@ -123,21 +125,21 @@ export default {
           console.error(error);
         });
     },
-    getEditorialList() {
-      const vm = this;
-      this.axios.get(this.baseUrl + "/editoriales")
-        .then(function (response) {
-          vm.editorialList = response.data;
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    },
     getAutorList() {
       const vm = this;
       this.axios.get(this.baseUrl + "/autores")
         .then(function (response) {
           vm.autorList = response.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    },
+    getEditorialList() {
+      const vm = this;
+      this.axios.get(this.baseUrl + "/editoriales")
+        .then(function (response) {
+          vm.editorialList = response.data;
         })
         .catch(function (error) {
           console.error(error);

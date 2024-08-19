@@ -31,12 +31,6 @@
       "nombre": "Pearson",
       "telefono": "555-7777",
       "direccion": "456 Calle Real"
-    },
-    {
-      "nombre": "Hugo Andia",
-      "telefono": "60621272",
-      "direccion": "Obrajes, c. 2",
-      "id": "rWICTrT"
     }
   ],
   "libros": [
@@ -45,7 +39,7 @@
       "titulo": "La Piedra Filosofal",
       "genero": "Ficción",
       "autorId": "1",
-      "numpaginas": "5",
+      "numpaginas": 10,
       "editorialId": "1"
     },
     {
@@ -60,7 +54,7 @@
       "id": "3",
       "titulo": "Rex",
       "genero": "Ficción",
-      "autorId": "4",
+      "autorId": "5",
       "numpaginas": "7",
       "editorialId": "2"
     },
@@ -79,6 +73,14 @@
       "autorId": "1",
       "numpaginas": "6",
       "editorialId": "4"
+    },
+    {
+      "autorId": "5",
+      "editorialId": "2",
+      "genero": "Comic",
+      "titulo": "Toto 2",
+      "numpaginas": 33,
+      "id": "E_tTIpP"
     }
   ],
   "autores": [
